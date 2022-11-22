@@ -1,0 +1,45 @@
+networks:
+  net:
+
+services:
+  redis:
+    image: redis
+    networks:
+      - net
+
+  generator:
+    build:
+      context: ./generator
+    environment:
+      R_URL: "redis://redis:6379"
+      R_TOPIC: alerts
+      DELAY: 5
+    networks:
+      - net
+    depends_on:
+      - redis
+
+  server:
+    build:
+      context: ./server
+    environment:
+      R_URL: "redis://redis:6379"
+      R_TOPIC: alerts
+    ports:
+      - "81:80"
+    networks:
+      - net
+    depends_on:
+      - redis
+
+  ui:
+    image: caddy
+    volumes:
+      - "./web/ui:/usr/share/caddy"
+      - "./web/Caddyfile:/etc/caddy/Caddyfile"
+    ports:
+      - "80:80"
+    networks:
+      - net
+    depends_on:
+      - server
