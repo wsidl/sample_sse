@@ -32,7 +32,9 @@ def new_connection():
             
             if message['data'] == 1:
                 continue
-            yield f'event: NewAlert\ndata: {message["data"].decode("utf-8")}\n\n'
+            data = json.loads(message['data'])
+            data['server'] = environ['HOSTNAME']
+            yield f'event: NewAlert\ndata: {json.dumps(data)}\n\n'
     return Response(generate_messages(), mimetype=MIME_TYPE, headers=HEADERS)
 
 

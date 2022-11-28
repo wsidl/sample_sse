@@ -78,6 +78,10 @@ The big difference when applying this in production is the need to scale. Since 
 downstream clients will need to an API instance, all instances of the API Service must
 receive the same message for downstream applications.
 
+This demo accommodates horizontal scaling with a replicated API Server
+(which is demonstrated with the "server" property in the SSE Event), but most designs
+may consider the "generator" and "api" instance may be a single application.
+
 Reflecting the diagram to support this scenario would look like:
 
 ```mermaid

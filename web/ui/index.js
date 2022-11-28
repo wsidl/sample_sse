@@ -5,7 +5,7 @@ es.addEventListener("NewAlert", event => {
 	let main = document.createElement("li");
 	if(event.data === "1") return;
 	let eventData = JSON.parse(event.data);
-	main.innerHTML = `<b>Alert Key</b> = ${eventData["key"]}<br/><b>Random Number</b> = ${eventData["message"]}`
+	main.innerHTML = `<b>Alert Key</b> = ${eventData["key"]}<br/><b>Server</b> = ${eventData["server"]}<br/><b>Random Number</b> = ${eventData["message"]}`
 	alertList.appendChild(main);
 });
 es.addEventListener("error", err => {
